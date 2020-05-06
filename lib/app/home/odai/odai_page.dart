@@ -38,6 +38,8 @@ class _CreateOdaiPageState extends State<CreateOdaiPage> {
       //ここはtrueになっているから問題があるのはtryの中
       try {
         final database = Provider.of<FirestoreDatabase>(context, listen: false);
+        //上のコードが実行できないので一回ストップ。
+        //おそらく、アーキテクチャーを気にせず、一回シンプルなfirebaseアプリを作ったほうがいい
         final id = documentIdFromCurrentDate();
         final odai = Odai(name: _name, id: id);
         await database.setodai(odai);
