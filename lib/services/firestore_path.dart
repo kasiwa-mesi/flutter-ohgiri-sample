@@ -1,3 +1,4 @@
 class FirestorePath {
-  static String theme(String uid) => 'theme/$uid';
+  static String odai(String odaiId) => '/odai/$odaiId';
+  static String odais(String uid) => '/odais';
 }
