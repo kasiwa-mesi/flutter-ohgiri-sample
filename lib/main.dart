@@ -1,7 +1,7 @@
 import 'package:ohgiri_sample/app/auth_widget_builder.dart';
+import 'package:ohgiri_sample/app/auth_widget.dart';
 import 'package:ohgiri_sample/services/firebase_auth_service.dart';
 import 'package:ohgiri_sample/services/firestore_database.dart';
-import 'package:ohgiri_sample/app/home/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ohgiri_sample/routing/router.dart';
@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
           return MaterialApp(
             theme: ThemeData(primarySwatch: Colors.indigo),
             debugShowCheckedModeBanner: false,
-            home: HomePage(),
+            home: AuthWidget(userSnapshot: userSnapshot),
             onGenerateRoute: Router.onGenerateRoute,
           );
         },

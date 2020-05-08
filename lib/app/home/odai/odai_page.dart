@@ -2,11 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:uuid/uuid.dart';
 import 'package:ohgiri_sample/common_widgets/show_exception_alert_dialog.dart';
 import 'package:ohgiri_sample/app/home/models/odai.dart';
 import 'package:ohgiri_sample/constants/strings.dart';
 import 'package:ohgiri_sample/services/firestore_database.dart';
-
 
 class CreateOdaiPage extends StatefulWidget {
   @override
@@ -15,8 +15,8 @@ class CreateOdaiPage extends StatefulWidget {
 
 class _CreateOdaiPageState extends State<CreateOdaiPage> {
   final _formKey = GlobalKey<FormState>();
-
   String _name;
+  var uuid = Uuid();
 
   @override
   void initState() {
@@ -40,10 +40,31 @@ class _CreateOdaiPageState extends State<CreateOdaiPage> {
         final database = Provider.of<FirestoreDatabase>(context, listen: false);
         //上のコードが実行できないので一回ストップ。
         //おそらく、アーキテクチャーを気にせず、一回シンプルなfirebaseアプリを作ったほうがいい
-        final id = documentIdFromCurrentDate();
+        final id = uuid.v1();
         final odai = Odai(name: _name, id: id);
         await database.setodai(odai);
-        Navigator.of(context).pop();
+        // ここの処理が間違っていると思う。
+        // 作成成功後の画面に飛ばすか、alertを出したほうがいいと思う。
+        // Navigator.of(context).pop();
+        //お題を作成したら、Textfieldを空にしたい。
+        //→materialDesignに確かある。
+        showDialog<bool>(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              content: const Text('お題の作成に成功しました!'),
+              actions: <Widget>[
+                FlatButton(
+                  child: const Text('戻る'),
+                  onPressed: () {
+                    _name = null;
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            );
+          },
+        );
       } catch (e) {
         showExceptionAlertDialog(
           context: context,
@@ -103,7 +124,9 @@ class _CreateOdaiPageState extends State<CreateOdaiPage> {
         child: Text("送信"),
         color: Colors.indigo,
         textColor: Colors.white,
-        onPressed: _submit,
+        onPressed: () {
+          _submit();
+        },
       ),
     ];
   }

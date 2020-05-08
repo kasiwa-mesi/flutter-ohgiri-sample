@@ -42,13 +42,15 @@ class Strings {
 
   // Home page
   static const String homePage = 'Home Page';
+  static const String nickName = 'ニックネーム';
+  static const String initialSetting = '初期設定';
 
   // TimeLine page
   static const String timeline = 'Timeline';
 
   // Theme page
   static const String odai = 'お題作成';
-  static const String exapleOdai = 'こんな美容室はいやだ？どんな美容室？';
+  static const String exapleOdai = '例:こんな美容室はいやだ？どんな美容室？';
 
   // Account page
   static const String account = 'Account';

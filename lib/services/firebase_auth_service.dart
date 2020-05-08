@@ -3,15 +3,37 @@ import 'package:flutter/foundation.dart';
 
 @immutable
 class User {
-  const User({@required this.uid});
+  // const User({@required this.uid, @required this.displayName, @required this.email});
+  const User({@required this.uid, @required this.displayName});
   final String uid;
+  final String displayName;
+  // final String email;
+
+  factory User.fromMap(Map<String, dynamic> data, String documentId) {
+    if (data == null) {
+      return null;
+    }
+    final String name = data['name'];
+    if (name == null) {
+      return null;
+    }
+    return User(uid: documentId, displayName: name);
+  }
+
+    Map<String, dynamic> toMap() {
+      return {
+        'id' : uid,
+        'name': displayName,
+      };
+  }
 }
 
 class FirebaseAuthService {
   final _firebaseAuth = FirebaseAuth.instance;
 
   User _userFromFirebase(FirebaseUser user) {
-    return user == null ? null : User(uid: user.uid);
+    // return user == null ? null : User(uid: user.uid, displayName: user.displayName, email: user.email);
+    return user == null ? null : User(uid: user.uid, displayName: user.displayName);
   }
 
   Stream<User> get onAuthStateChanged {

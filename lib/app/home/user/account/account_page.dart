@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:ohgiri_sample/common_widgets/avatar.dart';
 import 'package:ohgiri_sample/common_widgets/show_alert_dialog.dart';
 import 'package:ohgiri_sample/common_widgets/show_exception_alert_dialog.dart';
 import 'package:ohgiri_sample/constants/keys.dart';
