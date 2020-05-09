@@ -29,6 +29,7 @@ class User {
 }
 
 class FirebaseAuthService {
+  String userid;
   final _firebaseAuth = FirebaseAuth.instance;
 
   User _userFromFirebase(FirebaseUser user) {
@@ -47,5 +48,11 @@ class FirebaseAuthService {
 
   Future<void> signOut() async {
     return await _firebaseAuth.signOut();
+  }
+
+  Future getCurrentUser() async {
+    final FirebaseUser user = await _firebaseAuth.currentUser();
+    userid = user.uid;
+    return userid;
   }
 }

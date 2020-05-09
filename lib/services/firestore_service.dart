@@ -4,6 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 
 class FirestoreService {
+  // FirestoreService({@required this.uid}) : assert(uid != null);
+  // final String uid;
   FirestoreService._();
   static final instance = FirestoreService._();
 

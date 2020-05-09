@@ -6,7 +6,6 @@ import 'package:ohgiri_sample/services/firebase_auth_service.dart';
 import 'package:ohgiri_sample/services/firestore_path.dart';
 import 'package:ohgiri_sample/services/firestore_service.dart';
 
-
 String documentIdFromCurrentDate() => DateTime.now().toIso8601String();
 
 class FirestoreDatabase {
@@ -23,6 +22,11 @@ class FirestoreDatabase {
   Future<void> setuser(User user) async => await _service.setData(
         path: FirestorePath.user(user.uid),
         data: user.toMap(),
+      );
+
+  Stream<User> userStream({@required String uid}) => _service.documentStream(
+        path: FirestorePath.user(uid),
+        builder: (data, documentId) => User.fromMap(data, documentId),
       );
 
   Stream<Odai> odaiStream({@required String odaiId}) => _service.documentStream(

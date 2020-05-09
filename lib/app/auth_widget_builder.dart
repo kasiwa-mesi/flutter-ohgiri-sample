@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ohgiri_sample/services/firebase_auth_service.dart';
+import 'package:ohgiri_sample/services/firestore_service.dart';
 import 'package:ohgiri_sample/services/firestore_database.dart';
 import 'package:provider/provider.dart';
 

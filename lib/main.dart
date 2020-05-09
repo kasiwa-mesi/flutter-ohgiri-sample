@@ -22,6 +22,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // MultiProvider for top-level services that don't depend on any runtime values (e.g. uid)
+    // userをfirebaseに登録させるにはここに処理を書けばいいと思う。
+    //設計からやり直さないと事実上匿名ユーザーを保存することができないので、gitbranchを切る
     return MultiProvider(
       providers: [
         Provider<FirebaseAuthService>(
