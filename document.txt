@@ -1,0 +1,35 @@
+//app/home/models/user.dart
+import 'package:meta/meta.dart';
+
+class User {
+  User({@required this.uid, @required this.name, this.email, this.password});
+  final String uid;
+  final String name;
+  final String email;
+  final String password;
+  
+  factory User.fromMap(Map<String, dynamic> data, String documentId) {
+    if (data == null) {
+      return null;
+    }
+    final String name = data['name'];
+    if (name == null) {
+      return null;
+    }
+    return User(uid: documentId, name: name);
+  }
+
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': uid,
+      'name': name,
+      'email': email,
+      'password': password,
+    };
+  }
+
+  @override
+  String toString() => 'id: $uid, name: $name';
+
+}
