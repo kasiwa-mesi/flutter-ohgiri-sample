@@ -8,6 +8,7 @@ import 'package:ohgiri_sample/services/firestore_database.dart';
 //themeを読み込んで表示したほうがいい。
 //1.文字列を表示
 //2.firebaseと接続して、themeを表示させる。
+//1はできたから2をやる。アーキテクチャー上HomePage以下だから、firebaseの使用は問題ないはず。
 
 class TimelinePage extends StatelessWidget {
   @override
