@@ -20,6 +20,70 @@ class TimelinePage extends StatelessWidget {
               icon: Icon(Icons.add, color: Colors.white), onPressed: () {}),
         ],
       ),
+      body: buildContents(),
+    );
+  }
+}
+
+Widget buildContents() {
+  final controller = PageController();
+  return Container(
+    child: PageView(
+      controller: controller,
+      scrollDirection: Axis.vertical,
+      children: <Widget>[
+        MyPage1Widget(),
+        MyPage2Widget(),
+        MyPage3Widget(),
+      ],
+    ),
+  );
+}
+
+class MyPage1Widget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Text(
+        '1',
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 100,
+          color: Colors.indigo,
+        ),
+      ),
+    );
+  }
+}
+
+class MyPage2Widget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Text(
+        '2',
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 100,
+          color: Colors.indigo,
+        ),
+      ),
+    );
+  }
+}
+
+class MyPage3Widget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Text(
+        '3',
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 100,
+          color: Colors.indigo,
+        ),
+      ),
     );
   }
 }

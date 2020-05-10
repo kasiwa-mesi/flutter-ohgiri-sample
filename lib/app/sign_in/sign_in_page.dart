@@ -12,7 +12,6 @@ class SignInPage extends StatefulWidget {
 
 class _SignInPageState extends State<SignInPage> {
   final _formKey = GlobalKey<FormState>();
-  String _name;
   String id;
   // var uuid = Uuid();
 
@@ -31,43 +30,6 @@ class _SignInPageState extends State<SignInPage> {
       print(e);
     }
   }
-
-  
-
-  bool _validateAndSaveForm() {
-    final form = _formKey.currentState;
-    if (form.validate()) {
-      form.save();
-      return true;
-    }
-    return false;
-  }
-
-  Future<void> _submit() async {
-    if(_validateAndSaveForm()) { 
-      try {
-        final database = Provider.of<FirestoreDatabase>(context, listen: false);
-        // TextFieldに入力したUserの名前をfirestoreに登録させる
-        final user = User(displayName: _name, uid: id);
-        await database.setuser(user);
-      } catch(e) {
-        print(e);
-      }
-    }
-  }
-
-  // Future<void> _submit() async {
-  //   if(_validateAndSaveForm()) {
-  //     try {
-  //       final id = uuid.v1();
-  //       final user = User(uid: id, displayName: _name);
-  //       final database = Provider.of<FirestoreDatabase>(context, listen: false);
-  //       await database.setuser(user);
-  //     } catch (e) {
-  //       print(e);
-  //     }
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -103,20 +65,23 @@ class _SignInPageState extends State<SignInPage> {
 
   List<Widget> _buildFormChilden() {
     return [
-      TextFormField(
-        decoration: InputDecoration(labelText: Strings.nickName),
-        keyboardAppearance: Brightness.light,
-        initialValue: _name,
-        validator: (value) => value.isNotEmpty ? null : 'ニックネームは必ず入力してください',
-        onSaved: (value) => _name = value,
+      Center(
+        child: Text("大喜利飯")
       ),
+      // TextFormField(
+      //   decoration: InputDecoration(labelText: Strings.nickName),
+      //   keyboardAppearance: Brightness.light,
+      //   initialValue: _name,
+      //   validator: (value) => value.isNotEmpty ? null : 'ニックネームは必ず入力してください',
+      //   onSaved: (value) => _name = value,
+      // ),
       RaisedButton(
-        child: Text("決定"),
+        child: Text("はじめる"),
         color: Colors.indigo,
         textColor: Colors.white,
         onPressed: () {
           _signInAnonymously();
-          _submit();
+          // _submit();
         },
       ),
     ];

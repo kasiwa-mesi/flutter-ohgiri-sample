@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:ohgiri_sample/app/home/home_page.dart';
 import 'package:ohgiri_sample/app/home/odai/odai_page.dart';
 import 'package:ohgiri_sample/app/home/models/odai.dart';
+import 'package:ohgiri_sample/app/home/initial_setting/ititial_setting_page.dart';
 import 'package:ohgiri_sample/app/home/user/sign_in/sign_in_page.dart';
 
 class Routes {
   static const homePage = '/';
   static const createOdaiPage = '/create-odai-page';
+  static const initialSettingPage = '/initial-setting-page';
 }
 
 class Router {
@@ -25,6 +27,11 @@ class Router {
           builder: (_) => CreateOdaiPage(),
           settings: settings,
           fullscreenDialog: true,
+        );
+      case Routes.initialSettingPage:
+        return MaterialPageRoute<dynamic>(
+          builder: (_) => InitialSettingPage(),
+          settings: settings,
         );
       default:
         // TODO: Throw

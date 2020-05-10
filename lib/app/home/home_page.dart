@@ -6,6 +6,7 @@ import 'package:ohgiri_sample/app/home/odai/odai_page.dart';
 import 'package:ohgiri_sample/app/home/user/account/account_page.dart';
 import 'package:ohgiri_sample/app/home/power/power_page.dart';
 import 'package:ohgiri_sample/app/home/timeline/timeline_page.dart';
+import 'package:ohgiri_sample/app/home/initial_setting/ititial_setting_page.dart';
 import 'package:ohgiri_sample/app/home/tab_item.dart';
 
 class HomePage extends StatefulWidget {
@@ -20,6 +21,7 @@ class _HomePageState extends State<HomePage> {
     TabItem.timeline: GlobalKey<NavigatorState>(),
     TabItem.odai: GlobalKey<NavigatorState>(),
     TabItem.account: GlobalKey<NavigatorState>(),
+    TabItem.setting: GlobalKey<NavigatorState>(),
   };
 
   Map<TabItem, WidgetBuilder> get widgetBuilders {
@@ -27,6 +29,7 @@ class _HomePageState extends State<HomePage> {
       TabItem.timeline: (_) => TimelinePage(),
       TabItem.odai: (context) => CreateOdaiPage(),
       TabItem.account: (_) => AccountPage(),
+      TabItem.setting: (_) => InitialSettingPage(),
     };
   }
 

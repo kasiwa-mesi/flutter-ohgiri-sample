@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ohgiri_sample/constants/keys.dart';
 import 'package:ohgiri_sample/constants/strings.dart';
 
-enum TabItem { timeline, odai, account }
+enum TabItem { timeline, odai, account, setting }
 
 class TabItemData {
   const TabItemData(
@@ -24,6 +24,11 @@ class TabItemData {
       icon: Icons.view_headline,
     ),
     TabItem.account: TabItemData(
+      key: Keys.accountTab,
+      title: Strings.account,
+      icon: Icons.person,
+    ),
+    TabItem.setting: TabItemData(
       key: Keys.accountTab,
       title: Strings.account,
       icon: Icons.person,
