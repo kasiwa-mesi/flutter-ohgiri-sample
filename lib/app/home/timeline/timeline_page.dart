@@ -10,17 +10,22 @@ import 'package:ohgiri_sample/services/firestore_database.dart';
 //2.firebaseと接続して、themeを表示させる。
 //1はできたから2をやる。アーキテクチャー上HomePage以下だから、firebaseの使用は問題ないはず。
 
-class TimelinePage extends StatelessWidget {
+class TimelinePage extends StatefulWidget {
+  @override
+  _TimelinePageState createState() => _TimelinePageState();
+}
+
+class _TimelinePageState extends State<TimelinePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(Strings.timeline),
-        actions: <Widget>[
-          IconButton(
-              icon: Icon(Icons.add, color: Colors.white), onPressed: () {}),
-        ],
-      ),
+      // appBar: AppBar(
+      //   title: Text(Strings.timeline),
+      //   actions: <Widget>[
+      //     IconButton(
+      //         icon: Icon(Icons.add, color: Colors.white), onPressed: () {}),
+      //   ],
+      // ),
       body: buildContents(),
     );
   }
@@ -32,59 +37,41 @@ Widget buildContents() {
     child: PageView(
       controller: controller,
       scrollDirection: Axis.vertical,
-      children: <Widget>[
-        MyPage1Widget(),
-        MyPage2Widget(),
-        MyPage3Widget(),
-      ],
+      children: _buildFullPages(10),
     ),
   );
 }
 
-class MyPage1Widget extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text(
-        '1',
-        style: TextStyle(
-          fontWeight: FontWeight.bold,
-          fontSize: 100,
-          color: Colors.indigo,
+List<Container> _buildFullPages(int count) {
+  List <Container> pages = List.generate(
+    count,
+    (int index) => Container(
+      child: Center(
+        child: Text(
+          //odai.text
+          'こんな鮨屋は嫌だ？一体何？',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 40,
+            color: Colors.black87,
+          ),
         ),
       ),
-    );
-  }
+    ),
+  );
+  // Widget build(BuildContext context) {
+  //   return Center(
+  //     child: Text(
+  //       '1',
+  //       style: TextStyle(
+  //         fontWeight: FontWeight.bold,
+  //         fontSize: 100,
+  //         color: Colors.indigo,
+  //       ),
+  //     ),
+  //   );
+  // }
+  return pages;
 }
 
-class MyPage2Widget extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text(
-        '2',
-        style: TextStyle(
-          fontWeight: FontWeight.bold,
-          fontSize: 100,
-          color: Colors.indigo,
-        ),
-      ),
-    );
-  }
-}
 
-class MyPage3Widget extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text(
-        '3',
-        style: TextStyle(
-          fontWeight: FontWeight.bold,
-          fontSize: 100,
-          color: Colors.indigo,
-        ),
-      ),
-    );
-  }
-}

@@ -79,9 +79,9 @@ class _CreateOdaiPageState extends State<CreateOdaiPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(Strings.odai),
-      ),
+      // appBar: AppBar(
+      //   title: Text(Strings.odai),
+      // ),
       body: _buildContents(),
       backgroundColor: Colors.grey[200],
     );
