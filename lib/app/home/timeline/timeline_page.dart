@@ -36,6 +36,16 @@ Widget _buildContents(BuildContext context) {
       builder: (context, snapshot) {
         print('StreamBuilder: ${snapshot.connectionState}');
         final List<Odai> odaies = snapshot.data;
+//この下からエラーが発生しているけど実装はできている。最終確認の時に改善できたら改善する。
+// flutter: The following NoSuchMethodError was thrown building StreamBuilder<List<Odai>>(dirty, state:
+// flutter: _StreamBuilderBaseState<List<Odai>, AsyncSnapshot<List<Odai>>>#1bff0):
+// flutter: The getter 'length' was called on null.
+// flutter: Receiver: null
+// flutter: Tried calling: length
+// flutter:
+// flutter: The relevant error-causing widget was:
+// flutter:   StreamBuilder<List<Odai>>
+// flutter:   file:///Users/yahatanaoki/work/flutter_app/flutter-ohgiri-sample/lib/app/home/timeline/timeline_page.dart:34:10
         final odaiCount = odaies.length;
         // final odai = odaies[2];
         return PageView(
