@@ -7,6 +7,9 @@ import 'package:ohgiri_sample/services/firestore_database.dart';
 //1.文字列を表示
 //2.firebaseと接続して、themeを表示させる。
 //1はできたから2をやる。アーキテクチャー上HomePage以下だから、firebaseの使用は問題ないはず。
+//実装できた。
+//odaiのフィールドにanswerコレクションを追加する。
+//お題に対する回答を保存できるようにする。
 
 class TimelinePage extends StatelessWidget {
   String posts;
