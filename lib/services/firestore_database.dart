@@ -19,6 +19,10 @@ class FirestoreDatabase {
         data: odai.toMap(),
       );
 
+  // Future<void> getodai() async => await _service.getData(
+  //   path: FirestorePath.odais(),
+  // );
+
   Future<void> setuser(User user) async => await _service.setData(
         path: FirestorePath.user(user.uid),
         data: user.toMap(),
@@ -34,8 +38,13 @@ class FirestoreDatabase {
         builder: (data, documentId) => Odai.fromMap(data, documentId),
       );
 
-  Stream<List<Odai>> odaiesStream() => _service.collectionStream(
-        path: FirestorePath.odais(uid),
+  Stream<List<Odai>> odaisStream() => _service.collectionStream(
+        path: FirestorePath.odais(),
         builder: (data, documentId) => Odai.fromMap(data, documentId),
       );
+
+  // Stream<List<Odai>> odaiesStream() => _service.collectionStream(
+  //       path: FirestorePath.odais(uid),
+  //       builder: (data, documentId) => Odai.fromMap(data, documentId),
+  //     );
 }
