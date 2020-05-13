@@ -42,7 +42,7 @@ class TimelinePage extends StatelessWidget {
         children: <Widget>[
           Expanded(child: _buildContents(context)),
           // iconSection,
-          ActionsToolbar(),
+          ActionsToolbar(odaiId: ),
         ],
       ),
     );
@@ -58,6 +58,7 @@ Widget _buildContents(BuildContext context) {
       builder: (context, snapshot) {
         print('StreamBuilder: ${snapshot.connectionState}');
         final List<Odai> odaies = snapshot.data;
+        print(odaies);
 //この下からエラーが発生しているけど実装はできている。最終確認の時に改善できたら改善する。
 // flutter: The following NoSuchMethodError was thrown building StreamBuilder<List<Odai>>(dirty, state:
 // flutter: _StreamBuilderBaseState<List<Odai>, AsyncSnapshot<List<Odai>>>#1bff0):
@@ -85,26 +86,36 @@ Widget _buildContents(BuildContext context) {
 }
 
 List<Container> _buildFullPages(int count, List<Odai> odaies) {
-  // for (var odai in odaies) {
-  //   print(odai.name);
-  // }
+  for (var odai in odaies) {
+    String odaiId;
+    odaiId = odai.id;
+    giveIdToActions(odaiId);
+  }
   List<Container> pages = List.generate(
     count,
     (int index) => Container(
       child: Center(
-        child: Text(
-          odaies[index].name,
-          // 'こんな鮨屋は嫌だ？一体何？',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 40,
-            color: Colors.black87,
-          ),
+        child: Column(
+          children: <Widget>[
+            Text(
+              odaies[index].name,
+              // 'こんな鮨屋は嫌だ？一体何？',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 40,
+                color: Colors.black87,
+              ),
+            ),
+          ],
         ),
       ),
     ),
   );
   return pages;
+}
+
+void giveIdToActions(String odaiId) {
+  
 }
 // List<Container> _buildPage() {
 //   Container(
