@@ -49,8 +49,14 @@ Widget _buildContents(BuildContext context) {
 // flutter: The relevant error-causing widget was:
 // flutter:   StreamBuilder<List<Odai>>
 // flutter:   file:///Users/yahatanaoki/work/flutter_app/flutter-ohgiri-sample/lib/app/home/timeline/timeline_page.dart:34:10
-        final odaiCount = odaies.length;
+        // final odaiCount = odaies.length;
         // final odai = odaies[2];
+        int odaiCount;
+        if (odaies == null) {
+          odaiCount = 0;
+        } else {
+          odaiCount = odaies.length;
+        }
         return PageView(
           controller: controller,
           scrollDirection: Axis.vertical,
