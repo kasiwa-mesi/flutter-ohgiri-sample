@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ohgiri_sample/app/home/models/odai.dart';
 import 'package:ohgiri_sample/services/firestore_database.dart';
+import 'package:ohgiri_sample/app/home/timeline/widgets/actions_toolbar.dart';
+import 'package:ohgiri_sample/app/home/timeline/widgets/downscroll_icon.dart';
 //themeを読み込んで表示したほうがいい。
 //1.文字列を表示
 //2.firebaseと接続して、themeを表示させる。
@@ -15,6 +17,15 @@ class TimelinePage extends StatelessWidget {
   String posts;
   Odai odai;
 
+  // Widget get iconSection => Expanded(
+  //   child: Row(
+  //     mainAxisSize: MainAxisSize.max,
+  //     crossAxisAlignment: CrossAxisAlignment.start,
+  //     children: <Widget>[
+  //       DownScrollIcon(),
+  //       ActionsToolbar()
+  //     ]));
+
   Widget build(BuildContext context) {
     return Scaffold(
       // appBar: AppBar(
@@ -25,7 +36,15 @@ class TimelinePage extends StatelessWidget {
       //   ],
       // ),
       // body: buildContents(),
-      body: _buildContents(context),
+      body: Row(
+        mainAxisSize: MainAxisSize.max,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: <Widget>[
+          Expanded(child: _buildContents(context)),
+          // iconSection,
+          ActionsToolbar(),
+        ],
+      ),
     );
   }
 }
@@ -69,7 +88,7 @@ List<Container> _buildFullPages(int count, List<Odai> odaies) {
   // for (var odai in odaies) {
   //   print(odai.name);
   // }
-  List <Container> pages = List.generate(
+  List<Container> pages = List.generate(
     count,
     (int index) => Container(
       child: Center(
