@@ -42,7 +42,7 @@ class TimelinePage extends StatelessWidget {
         children: <Widget>[
           Expanded(child: _buildContents(context)),
           // iconSection,
-          ActionsToolbar(odaiId: ),
+          ActionsToolbar(),
         ],
       ),
     );
@@ -53,6 +53,7 @@ Widget _buildContents(BuildContext context) {
   print('TimelinePage rebuild');
   final database = Provider.of<FirestoreDatabase>(context, listen: false);
   final controller = PageController();
+  int currentPage = 0;
   return StreamBuilder<List<Odai>>(
       stream: database.odaisStream(),
       builder: (context, snapshot) {

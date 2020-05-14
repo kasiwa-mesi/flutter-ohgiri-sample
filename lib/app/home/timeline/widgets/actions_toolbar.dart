@@ -6,8 +6,8 @@ import 'package:ohgiri_sample/app/home/models/answer.dart';
 import 'package:ohgiri_sample/services/firestore_database.dart';
 
 class ActionsToolbar extends StatefulWidget {
-  const ActionsToolbar({Key key, @required this.odaiId}) : super(key: key);
-  final String odaiId;
+  // const ActionsToolbar({Key key, @required this.odaiName}) : super(key: key);
+  // final String odaiName;
 
   @override
   _ActionsToolbarState createState() => _ActionsToolbarState();
@@ -15,6 +15,12 @@ class ActionsToolbar extends StatefulWidget {
 
 class _ActionsToolbarState extends State<ActionsToolbar> {
   var uuid = Uuid();
+  String _answerName;
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   //1.お題のフィールドにアンサーコレクションを作る
   //2.アンサーコレクションにnameフィールド、idをつける。
@@ -25,10 +31,46 @@ class _ActionsToolbarState extends State<ActionsToolbar> {
   //問題.OdaiIdの配列の中から現在のページのIDを取得することがむずかし
   //pageviewのindexを取得できれば、お題IDも特定することができる。
   //Currentindex = 0を定めてから構築すれば、現在のページのindexが取得できるかも???
-  Future<void> _addAnswer() async {
+  //プラスアイコン押した時にモーダルを出現させる。
+  //onpressedの時に行う処理
+  //1.お題のidを読み込む
+  //2.回答作成用のモーダルを出す。
+  Future<void> _openAnswerModal() async {
     try {
-      final database = Provider.of<FirestoreDatabase>(context, listen: false);
-      final id = uuid.v1();
+      showDialog<bool>(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Column(
+              children: <Widget>[
+                Text('回答作成'),
+                // Text(odaiName),
+              ],
+            ),
+            content: Expanded(
+                child: TextFormField(
+              decoration: InputDecoration(labelText: '回答を入力してください'),
+                keyboardAppearance: Brightness.light,
+                initialValue: _answerName,
+                validator: (value) =>
+                    value.isNotEmpty ? null : 'Name can\'t be empty',
+                onSaved: (value) => _answerName = value,
+              ),
+            ),
+            actions: <Widget>[
+              FlatButton(
+                child: Text('送信'),
+                onPressed: () {
+                  //回答を送信する処理
+                  //回答を作成が成功したことを知らせるdialogを表示
+                  _answerName = null;
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
     } catch (e) {
       showExceptionAlertDialog(
         context: context,
@@ -37,6 +79,21 @@ class _ActionsToolbarState extends State<ActionsToolbar> {
       );
       print(e);
     }
+  }
+
+  Future<void> _addAnswer() async {
+    // try {
+    //   final database = Provider.of<FirestoreDatabase>(context, listen: false);
+    //   final answerId = uuid.v1();
+    //   final answer = Answer(name: _name, id: answerId);
+    // } catch (e) {
+    //   showExceptionAlertDialog(
+    //     context: context,
+    //     title: 'Operation failed',
+    //     exception: e,
+    //   );
+    //   print(e);
+    // }
   }
 
   Future<void> _addFavarite() async {}
@@ -63,7 +120,9 @@ class _ActionsToolbarState extends State<ActionsToolbar> {
           //   },
           // )
           _getSocialAction(
-              icon: Icons.add, title: '答える', firebaseConnect: _addAnswer()),
+              icon: Icons.add,
+              title: '答える',
+              firebaseConnect: _openAnswerModal()),
           _getSocialAction(
               icon: Icons.favorite,
               title: '面白い!',
