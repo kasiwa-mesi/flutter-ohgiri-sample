@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 import 'package:ohgiri_sample/common_widgets/show_exception_alert_dialog.dart';
+import 'package:ohgiri_sample/app/home/timeline/timeline_page.dart';
 import 'package:ohgiri_sample/app/home/models/answer.dart';
 import 'package:ohgiri_sample/services/firestore_database.dart';
 
 class ActionsToolbar extends StatefulWidget {
-  // const ActionsToolbar({Key key, @required this.odaiName}) : super(key: key);
-  // final String odaiName;
+  const ActionsToolbar({Key key, @required this.odaiName}) : super(key: key);
+  final String odaiName;
 
   @override
   _ActionsToolbarState createState() => _ActionsToolbarState();
@@ -35,21 +36,22 @@ class _ActionsToolbarState extends State<ActionsToolbar> {
   //onpressedの時に行う処理
   //1.お題のidを読み込む
   //2.回答作成用のモーダルを出す。
+  //モーダルから回答作成用ページに変更する
   Future<void> _openAnswerModal() async {
     try {
-      showDialog<bool>(
+      //おそらく、ファイルの設定が間違っていると思う。
+      //変に効率化しようとして、エラーが起きている。
+      //getSocialIconをケチらず、クズコードで書き直せば、うまくいくかもしれない？？？
+      //うまくいった。
+      //あとはtimelineUi.dartからお題のIDを取得する事でお題に対する回答を保存する。
+      showDialog<String>(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Column(
-              children: <Widget>[
-                Text('回答作成'),
-                // Text(odaiName),
-              ],
-            ),
+            title: Text(odaiName),
             content: Expanded(
-                child: TextFormField(
-              decoration: InputDecoration(labelText: '回答を入力してください'),
+              child: TextFormField(
+                decoration: InputDecoration(labelText: '回答を入力してください'),
                 keyboardAppearance: Brightness.light,
                 initialValue: _answerName,
                 validator: (value) =>
@@ -72,6 +74,7 @@ class _ActionsToolbarState extends State<ActionsToolbar> {
         },
       );
     } catch (e) {
+      print('wakasama');
       showExceptionAlertDialog(
         context: context,
         title: 'Operation failed',
@@ -101,59 +104,62 @@ class _ActionsToolbarState extends State<ActionsToolbar> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 70.0,
-      // color: Colors.red[300],
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          // IconButton(
-          //   icon: Icon(Icons.add),
-          //   onPressed: () {
+        width: 70.0,
+        // color: Colors.red[300],
+        child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              IconButton(
+                icon: Icon(Icons.add),
+                iconSize: 35.0,
+                padding: EdgeInsets.only(top: 2.0),
+                onPressed: () {
+                  // Provider.of<_TimelineChangeNotifier>(context, listen: false).getOdaiId();
+                  _openAnswerModal();
+                },
+              ),
+              IconButton(
+                icon: Icon(Icons.favorite),
+                iconSize: 35.0,
+                padding: EdgeInsets.only(top: 2.0),
+                onPressed: () {
+                  print('kkasuga');
+                },
+              ),
 
-          //   },
-          // ),
-          // IconButton(
-          //   icon: Icon(Icons.favorite),
-          //   onPressed: () {
-
-          //   },
-          // )
-          _getSocialAction(
-              icon: Icons.add,
-              title: '答える',
-              firebaseConnect: _openAnswerModal()),
-          _getSocialAction(
-              icon: Icons.favorite,
-              title: '面白い!',
-              firebaseConnect: _addFavarite()),
-          Padding(
-            padding: EdgeInsets.only(bottom: 80.0),
-          ),
-        ],
-      ),
-    );
+              // アイコンボタン
+              // _getSocialAction(
+              //     icon: Icons.add,
+              //     title: '答える',
+              //     firebaseConnect: _openAnswerModal()),
+              // _getSocialAction(
+              //     icon: Icons.favorite,
+              //     title: '面白い!',
+              //     firebaseConnect: _addFavarite()),
+              Padding(
+                padding: EdgeInsets.only(bottom: 100.0),
+              ),
+            ]));
   }
 }
 
 Widget _getSocialAction(
     {String title, IconData icon, Future<void> firebaseConnect}) {
   return Container(
-      margin: EdgeInsets.only(top: 15.0),
-      width: 60.0,
-      height: 60.0,
-      child: Column(children: [
-        IconButton(
-          icon: Icon(icon, size: 35.0, color: Colors.black),
-          onPressed: () {
-            firebaseConnect;
-          },
-        ),
-        Padding(
-          padding: EdgeInsets.only(top: 4.0),
-          child: Text(title, style: TextStyle(fontSize: 12.0)),
-        )
-      ]));
+    margin: EdgeInsets.only(top: 15.0),
+    width: 60.0,
+    height: 60.0,
+    // child: Column(children: [
+    child: IconButton(
+      icon: Icon(icon, size: 35.0, color: Colors.black),
+      onPressed: () => firebaseConnect,
+    ),
+    // Padding(
+    //   padding: EdgeInsets.only(top: 4.0),
+    //   child: Text(title, style: TextStyle(fontSize: 12.0)),
+    // )
+  );
 }
 
 // Widget _getSocialAction({String title, IconData icon}) {
