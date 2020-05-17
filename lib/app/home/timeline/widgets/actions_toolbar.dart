@@ -37,6 +37,7 @@ class _ActionsToolbarState extends State<ActionsToolbar> {
   //1.お題のidを読み込む
   //2.回答作成用のモーダルを出す。
   //モーダルから回答作成用ページに変更する
+  //回答ページを作ることによって、エラーを減らす
   Future<void> _openAnswerModal() async {
     try {
       //おそらく、ファイルの設定が間違っていると思う。
