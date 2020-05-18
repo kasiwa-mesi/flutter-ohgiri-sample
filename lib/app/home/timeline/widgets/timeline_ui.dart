@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ohgiri_sample/app/home/models/odai.dart';
 import 'package:ohgiri_sample/services/firestore_database.dart';
+import 'package:ohgiri_sample/app/home/timeline/odai/odai_data.dart';
 import 'package:ohgiri_sample/app/home/home_page.dart';
 import 'package:ohgiri_sample/app/home/timeline/timeline_pages_builder.dart';
 import 'package:ohgiri_sample/app/home/timeline/timeline_page.dart';
@@ -41,14 +42,14 @@ class _TimelineUiState extends State<TimelineUi> {
   @override
   Widget build(BuildContext context) {
     print('TimelinePage rebuild');
+    final odaiModel = Provider.of<OdaiModel>(context, listen: false);
     final database = Provider.of<FirestoreDatabase>(context, listen: false);
     final _pageController = PageController();
     _onPageViewChange(int page) {
-      int currentIndex;
-      if (page != 0) {
-        print("Current Page: " + page.toString());
-        currentIndex = page;
-      }
+      print("Current Page: " + page.toString());
+      Future(() {
+        odaiModel.getOdaiId(page);
+      });
     }
     return StreamBuilder<List<Odai>>(
         stream: database.odaisStream(),
@@ -57,9 +58,22 @@ class _TimelineUiState extends State<TimelineUi> {
           // snapshot: snapshot,
           print('StreamBuilder: ${snapshot.connectionState}');
           final List<Odai> odaies = snapshot.data;
+          Future(() {
+            odaiModel.getOdaies(odaies);
+          });
           if (odaies == null) {
             return Container();
           }
+          // if (odaies != null) {
+          //   return MultiProvider(
+          //     providers: [
+          //       Provider<List<Odai>>.value(value: odaies),
+          //       ChangeNotifierProvider<OdaiModel>.value(
+          //         value: ,
+          //       )
+          //     ],
+          //   );
+          // }
           final odaiCount = odaies.length;
           return Expanded(
             child: PageView.builder(
@@ -71,8 +85,18 @@ class _TimelineUiState extends State<TimelineUi> {
                 // print(odaies.length);
                 print(index);
                 final String title = odaies[index].name;
+                // Future(() {
+                //   Provider.of<OdaiModel>(context, listen: false).getOdai(title);
+                // });
                 return ListTile(
-                  title: Text(title),
+                  title: Center(
+                    child: Text(
+                      title,
+                      style: TextStyle(
+                        fontSize: 30.0,
+                      ),
+                    ),
+                  ),
                 );
               },
               itemCount: odaies.length,
@@ -106,26 +130,26 @@ class _TimelineUiState extends State<TimelineUi> {
         });
   }
 
-  List<Container> _buildFullPages(int count, List<Odai> odaies) {
-    // for (var odai in odaies) {
-    //   print(odai.name);
-    // }
-    List<Container> pages = List.generate(
-      count,
-      (int index) => Container(
-        child: Center(
-          child: Text(
-            odaies[index].name,
-            // 'こんな鮨屋は嫌だ？一体何？',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 40,
-              color: Colors.black87,
-            ),
-          ),
-        ),
-      ),
-    );
-    return pages;
-  }
+//   List<Container> _buildFullPages(int count, List<Odai> odaies) {
+//     // for (var odai in odaies) {
+//     //   print(odai.name);
+//     // }
+//     List<Container> pages = List.generate(
+//       count,
+//       (int index) => Container(
+//         child: Center(
+//           child: Text(
+//             odaies[index].name,
+//             // 'こんな鮨屋は嫌だ？一体何？',
+//             style: TextStyle(
+//               fontWeight: FontWeight.bold,
+//               fontSize: 40,
+//               color: Colors.black87,
+//             ),
+//           ),
+//         ),
+//       ),
+//     );
+//     return pages;
+//   }
 }

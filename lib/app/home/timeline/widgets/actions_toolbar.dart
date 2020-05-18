@@ -5,10 +5,12 @@ import 'package:ohgiri_sample/common_widgets/show_exception_alert_dialog.dart';
 import 'package:ohgiri_sample/app/home/timeline/timeline_page.dart';
 import 'package:ohgiri_sample/app/home/models/answer.dart';
 import 'package:ohgiri_sample/services/firestore_database.dart';
+import 'package:ohgiri_sample/app/home/timeline/answer/answer_page.dart';
+import 'package:ohgiri_sample/app/home/timeline/odai/odai_data.dart';
 
 class ActionsToolbar extends StatefulWidget {
-  const ActionsToolbar({Key key, @required this.odaiName}) : super(key: key);
-  final String odaiName;
+  // const ActionsToolbar({Key key, @required this.odaiName}) : super(key: key);
+  // final String odaiName;
 
   @override
   _ActionsToolbarState createState() => _ActionsToolbarState();
@@ -38,6 +40,7 @@ class _ActionsToolbarState extends State<ActionsToolbar> {
   //2.回答作成用のモーダルを出す。
   //モーダルから回答作成用ページに変更する
   //回答ページを作ることによって、エラーを減らす
+  //onPressedでページをanswer_page.dartに飛ばす
   Future<void> _openAnswerModal() async {
     try {
       //おそらく、ファイルの設定が間違っていると思う。
@@ -49,7 +52,7 @@ class _ActionsToolbarState extends State<ActionsToolbar> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text(odaiName),
+            title: Text('回答作成'),
             content: Expanded(
               child: TextFormField(
                 decoration: InputDecoration(labelText: '回答を入力してください'),
@@ -104,20 +107,39 @@ class _ActionsToolbarState extends State<ActionsToolbar> {
 
   @override
   Widget build(BuildContext context) {
+    final odaiModel = Provider.of<OdaiModel>(context, listen: false);
     return Container(
-        width: 70.0,
+        width: 60.0,
         // color: Colors.red[300],
         child: Column(
             mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               IconButton(
                 icon: Icon(Icons.add),
                 iconSize: 35.0,
                 padding: EdgeInsets.only(top: 2.0),
                 onPressed: () {
-                  // Provider.of<_TimelineChangeNotifier>(context, listen: false).getOdaiId();
-                  _openAnswerModal();
+                  // Provider.of<OdaiModel>(context, listen: false).getOdai();
+                  // _openAnswerModal();
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(builder: (context) => CreateAnswerPage()),
+                  // );
+                  odaiModel.getOdai();
+                  Navigator.of(context).push(
+                    MaterialPageRoute<void>(
+                      builder: (context) => CreateAnswerPage(odai: odaiModel.odai),
+                    ),
+                  );
+                  // Navigator.of(context).push(
+                  //   MaterialPageRoute<void>(
+                  //     builder: (context) => Provider<OdaiModel>.value(
+                  //       value: Provider.of<OdaiModel>(context, listen: false),
+                  //       child: CreateAnswerPage(),
+                  //     ),
+                  //   ),
+                  // );
                 },
               ),
               IconButton(

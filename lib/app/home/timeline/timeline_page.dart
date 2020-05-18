@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:ohgiri_sample/app/home/models/odai.dart';
 import 'package:ohgiri_sample/app/home/timeline/widgets/actions_toolbar.dart';
 import 'package:ohgiri_sample/app/home/timeline/widgets/timeline_ui.dart';
+import 'package:ohgiri_sample/app/home/timeline/odai/odai_data.dart';
 //themeを読み込んで表示したほうがいい。
 //1.文字列を表示
 //2.firebaseと接続して、themeを表示させる。
@@ -21,12 +22,12 @@ class _TimelinePageState extends State<TimelinePage> {
   String posts;
   Odai odai;
 
-  final _TimelineChangeNotifier _timelineChangeNotifier = _TimelineChangeNotifier();
+  // final OdaiModel _odaiModel = OdaiModel();
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<_TimelineChangeNotifier>(
-      create: (_) => _TimelineChangeNotifier(),
+    return ChangeNotifierProvider<OdaiModel>(
+      create: (_) => OdaiModel(),
       child: Scaffold(
         body: Row(
           mainAxisSize: MainAxisSize.max,
@@ -41,19 +42,7 @@ class _TimelinePageState extends State<TimelinePage> {
   }
 }
 
-class _TimelineChangeNotifier extends ChangeNotifier {
-  int _currentIndex = 0;
-  String odai;
-  void getOdaiId(int index) {
-    _currentIndex = index;
-    notifyListeners();
-  }
-  void getOdai(int index, List<Odai> odaies) {
-    odai = odaies[index].name;
-    notifyListeners();
-  }
-    // increment()が呼ばれると、Listenerたちに変更を通知する
-}
+
 // List<Container> _buildPage() {
 //   Container(
 //     child: Center(
