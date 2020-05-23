@@ -3,6 +3,8 @@ import 'package:ohgiri_sample/constants/strings.dart';
 import 'package:ohgiri_sample/services/firestore_database.dart';
 import 'package:ohgiri_sample/services/firebase_auth_service.dart';
 import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 class InitialSettingPage extends StatefulWidget {
   @override
@@ -35,7 +37,10 @@ class _InitialSettingPageState extends State<InitialSettingPage> {
         final database = Provider.of<FirestoreDatabase>(context, listen: false);
         // TextFieldに入力したUserの名前をfirestoreに登録させる
         id = await auth.getCurrentUser();
-        final user = User(displayName: _name, uid: id);
+        initializeDateFormatting('ja');
+        var format = new DateFormat.yMMMd('ja');
+        final String createTime = format.format(new DateTime.now());
+        final user = User(displayName: _name, uid: id, createTime: createTime, likePostCount: 0);
         await database.setuser(user);
       } catch (e) {
         print(e);

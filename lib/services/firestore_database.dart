@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:meta/meta.dart';
 import 'package:ohgiri_sample/app/home/models/odai.dart';
+import 'package:ohgiri_sample/app/home/models/answer.dart';
 import 'package:ohgiri_sample/services/firebase_auth_service.dart';
 import 'package:ohgiri_sample/services/firestore_path.dart';
 import 'package:ohgiri_sample/services/firestore_service.dart';
@@ -17,6 +18,11 @@ class FirestoreDatabase {
   Future<void> setodai(Odai odai) async => await _service.setData(
         path: FirestorePath.odai(odai.id),
         data: odai.toMap(),
+      );
+  
+  Future<void> setanswer(Odai odai, Answer answer) async => await _service.setData(
+        path: FirestorePath.answer(odai.id, answer.id),
+        data: answer.toMap(),
       );
 
   // Future<void> getodai() async => await _service.getData(

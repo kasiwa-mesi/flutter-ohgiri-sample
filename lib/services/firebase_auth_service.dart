@@ -1,12 +1,17 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
+import 'package:intl/intl.dart';
+
 
 @immutable
 class User {
   // const User({@required this.uid, @required this.displayName, @required this.email});
-  const User({@required this.uid, @required this.displayName});
+  const User({@required this.uid, @required this.displayName, this.likePostCount, this.createTime});
   final String uid;
   final String displayName;
+  final int likePostCount;
+  int get currentLikeCount => likePostCount;
+  final String createTime;
   // final String email;
 
   factory User.fromMap(Map<String, dynamic> data, String documentId) {
@@ -14,16 +19,21 @@ class User {
       return null;
     }
     final String name = data['name'];
+    int _number = data['likePostCount'];
+    var format = new DateFormat.yMMMd('ja');
+    final String createTime = format.format(new DateTime.now());
     if (name == null) {
       return null;
     }
-    return User(uid: documentId, displayName: name);
+    return User(uid: documentId, displayName: name, likePostCount: _number, createTime: createTime);
   }
 
     Map<String, dynamic> toMap() {
       return {
         'id' : uid,
         'name': displayName,
+        'likePostCount': likePostCount,
+        'createTime': createTime,
       };
   }
 }

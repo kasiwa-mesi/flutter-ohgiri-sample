@@ -45,8 +45,9 @@ class _CreateAnswerPageState extends State<CreateAnswerPage> {
         //上のコードが実行できないので一回ストップ。
         //おそらく、アーキテクチャーを気にせず、一回シンプルなfirebaseアプリを作ったほうがいい
         final id = uuid.v1();
+        final odai = Odai(name: widget.odai.name, id: widget.odai.id);
         final answer = Answer(name: _name, id: id);
-        // await database.setanswer(answer);
+        await database.setanswer(odai, answer);
         //answer用のfirebaseの設定をする必要がある。
         //お題のIDが必要だから、timelineから渡す必要がある。
         showDialog<bool>(
@@ -58,6 +59,7 @@ class _CreateAnswerPageState extends State<CreateAnswerPage> {
                 FlatButton(
                   child: const Text('戻る'),
                   onPressed: () {
+                    print(_name);
                     _name = null;
                     Navigator.of(context).pop();
                   },
@@ -136,14 +138,15 @@ class _CreateAnswerPageState extends State<CreateAnswerPage> {
         keyboardAppearance: Brightness.light,
         initialValue: _name,
         validator: (value) => value.isNotEmpty ? null : '回答がありません',
+        onSaved: (value) => _name = value,
       ),
       RaisedButton(
         child: Text('作成'),
         color: Colors.black87,
         textColor: Colors.white,
         onPressed: () {
-          // _submit();
-          print('送信テスト');
+          _submit();
+          // print('送信テスト');
         },
       ),
     ];
