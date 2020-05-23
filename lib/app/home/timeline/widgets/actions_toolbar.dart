@@ -103,7 +103,20 @@ class _ActionsToolbarState extends State<ActionsToolbar> {
     // }
   }
 
-  Future<void> _addFavarite() async {}
+  Future<void> _addFavarite() async {
+    try {
+      final odaiModel = Provider.of<OdaiModel>(context, listen: false);
+      odaiModel.funnyIncrement();
+      print(odaiModel.funnyNumber);
+    } catch (e) {
+      showExceptionAlertDialog(
+        context: context,
+        title: 'Operation failed',
+        exception: e,
+      );
+      print(e);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -129,7 +142,8 @@ class _ActionsToolbarState extends State<ActionsToolbar> {
                   odaiModel.getOdai();
                   Navigator.of(context).push(
                     MaterialPageRoute<void>(
-                      builder: (context) => CreateAnswerPage(odai: odaiModel.odai),
+                      builder: (context) =>
+                          CreateAnswerPage(odai: odaiModel.odai),
                     ),
                   );
                   // Navigator.of(context).push(
@@ -147,7 +161,8 @@ class _ActionsToolbarState extends State<ActionsToolbar> {
                 iconSize: 35.0,
                 padding: EdgeInsets.only(top: 2.0),
                 onPressed: () {
-                  print('kkasuga');
+                  // print('kkasuga');
+                  _addFavarite();
                 },
               ),
 

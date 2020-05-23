@@ -3,10 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:ohgiri_sample/app/home/models/odai.dart';
 
 class OdaiModel extends ChangeNotifier {
+  int _funnyNumber = 0;
+  int get funnyNumber => _funnyNumber;
   int _currentIndex = 0;
   Odai _odai;
   Odai get odai => _odai;
   List<Odai> _odaies = [];
+
+  void funnyIncrement() {
+    _funnyNumber++;
+    notifyListeners();
+  }
+
   void getOdaiId(int index) {
     _currentIndex = index;
     // if (_odaies != null) {

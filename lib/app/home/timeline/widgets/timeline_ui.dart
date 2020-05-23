@@ -85,15 +85,22 @@ class _TimelineUiState extends State<TimelineUi> {
                 // print(odaies.length);
                 print(index);
                 final String title = odaies[index].name;
+                final String id = odaies[index].id;
                 // Future(() {
                 //   Provider.of<OdaiModel>(context, listen: false).getOdai(title);
                 // });
                 return ListTile(
-                  title: Center(
-                    child: Text(
+                  title: Text(
                       title,
                       style: TextStyle(
                         fontSize: 30.0,
+                      ),
+                    ),
+                  subtitle: Center(
+                    child: Text(
+                      id,
+                      style: TextStyle(
+                        fontSize: 30.0
                       ),
                     ),
                   ),
