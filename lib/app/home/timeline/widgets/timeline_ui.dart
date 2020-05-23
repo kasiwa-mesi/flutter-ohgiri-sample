@@ -39,6 +39,9 @@ class _TimelineUiState extends State<TimelineUi> {
   //1.itemCountをとりあえず、odaies.lengthにする。
   //2.Textは適当で、お題の数だけ出力する
 
+  //お題だけ表示させるの完成版
+  //保存用にブランチ着る
+
   @override
   Widget build(BuildContext context) {
     print('TimelinePage rebuild');
