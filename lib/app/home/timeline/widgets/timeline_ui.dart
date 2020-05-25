@@ -51,6 +51,7 @@ class _TimelineUiState extends State<TimelineUi> {
         odaiModel.getOdaiId(page);
       });
     }
+    //odaiとanswerを読み込む
     return StreamBuilder<List<Odai>>(
         stream: database.odaisStream(),
         builder: (context, snapshot) {
