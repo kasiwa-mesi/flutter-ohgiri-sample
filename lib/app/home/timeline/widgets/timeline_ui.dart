@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ohgiri_sample/app/home/models/odai.dart';
+import 'package:ohgiri_sample/app/home/models/answer.dart';
 import 'package:ohgiri_sample/services/firestore_database.dart';
 import 'package:ohgiri_sample/app/home/timeline/odai/odai_data.dart';
 import 'package:ohgiri_sample/app/home/home_page.dart';
@@ -51,16 +52,18 @@ class _TimelineUiState extends State<TimelineUi> {
         odaiModel.getOdaiId(page);
       });
     }
-    //odaiとanswerを読み込む
     return StreamBuilder<List<Odai>>(
         stream: database.odaisStream(),
         builder: (context, snapshot) {
           // return TimelinePagesBuilder(
           // snapshot: snapshot,
-          print('StreamBuilder: ${snapshot.connectionState}');
+          print('StreamBuilderForOdai: ${snapshot.connectionState}');
           final List<Odai> odaies = snapshot.data;
+          final odaiCount = odaies.length;
           Future(() {
             odaiModel.getOdaies(odaies);
+            odaiModel.setOdaiIds(odaiCount);
+            odaiModel.getOdaiIdInIds();
           });
           if (odaies == null) {
             return Container();
@@ -75,70 +78,84 @@ class _TimelineUiState extends State<TimelineUi> {
           //     ],
           //   );
           // }
-          final odaiCount = odaies.length;
           //answers.countにして回答の数だけpageviewを作れるようにしたい。
-          return Expanded(
-            child: PageView.builder(
-              onPageChanged: _onPageViewChange,
-              controller: _pageController,
-              scrollDirection: Axis.vertical,
-              //ここでお題のIDをanswerに渡せる仕組みにしたい。
-              itemBuilder: (context, index) {
-                // print(odaies.length);
-                print(index);
-                final String title = odaies[index].name;
-                final String id = odaies[index].id;
-                //このidをページが更新されるごとにfirestoreから答えを保存する。
-                //odai/id/answersで読み込めるように
-                //でもこの処理を書くなら、確実にpageViewの外でやる必要がある。 
-                // Future(() {
-                //   Provider.of<OdaiModel>(context, listen: false).getOdai(title);
-                // });
-                return ListTile(
-                  title: Text(
-                      title,
-                      style: TextStyle(
-                        fontSize: 30.0,
-                      ),
-                    ),
-                  subtitle: Center(
-                    child: Text(
-                      id,
-                      style: TextStyle(
-                        fontSize: 30.0
-                      ),
-                    ),
-                  ),
-                );
-              },
-              itemCount: odaies.length,
-              // children: _buildFullPages(odaiCount, odaies),
-              // children: TimelinePageTile(odaiCount: snapshot.data.length, odaies: snapshot.data,),
-              //childrenでも対応できるwidgetを探す？？？
-              // ),
-              // print('StreamBuilder: ${snapshot.connectionState}');
-              // final List<Odai> odaies = snapshot.data;
-              // int odaiCount;
-              // if (odaies == null) {
-              //   odaiCount = 0;
-              // } else {
-              //   odaiCount = odaies.length;
+          return StreamBuilder<List<Answer>>(
+            stream: database.answersStream(odaiId: odaiModel.odaiId),
+            builder: (context, snapshot) {
+              print('StreamBuilderForAnswer: ${snapshot.connectionState}');
+              final List<Answer> answers = snapshot.data;
+              print(answers);
+              // final answerCount = answers.length;
+              Future(() {
+                odaiModel.getAnswers(answers);
+              });
+              // if (answers = null) {
+              //   return Container();
               // }
-              //Pageviewのコード(下)
-              //____________________________
-              // return Expanded(
-              //   child: PageView.builder(
-              //     controller: _pageController,
-              //     scrollDirection: Axis.vertical,
-              //     onPageChanged: _handlePageChanged,
-              //     itemCount: odaiCount,
-              //     itemBuilder: (BuildContext context, int index) {
-              //      return  _buildFullPages(context, odaiCount);
-              //     },
-              //   ),
-              // );
-            ),
-          );
+            return Expanded(
+              child: PageView.builder(
+                onPageChanged: _onPageViewChange,
+                controller: _pageController,
+                scrollDirection: Axis.vertical,
+                //ここでお題のIDをanswerに渡せる仕組みにしたい。
+                itemBuilder: (context, index) {
+                  // print(odaies.length);
+                  print(index);
+                  final String title = odaies[index].name;
+                  final String answer = answers[index].name;
+                  // final String id = odaies[index].id;
+                  //このidをページが更新されるごとにfirestoreから答えを保存する。
+                  //odai/id/answersで読み込めるように
+                  //でもこの処理を書くなら、確実にpageViewの外でやる必要がある。 
+                  // Future(() {
+                  //   Provider.of<OdaiModel>(context, listen: false).getOdai(title);
+                  // });
+                  return ListTile(
+                    title: Text(
+                        title,
+                        style: TextStyle(
+                          fontSize: 30.0,
+                        ),
+                      ),
+                    subtitle: Center(
+                      child: Text(
+                        answer,
+                        style: TextStyle(
+                          fontSize: 30.0
+                        ),
+                      ),
+                    ),
+                  );
+                },
+                itemCount: answers.length,
+                // children: _buildFullPages(odaiCount, odaies),
+                // children: TimelinePageTile(odaiCount: snapshot.data.length, odaies: snapshot.data,),
+                //childrenでも対応できるwidgetを探す？？？
+                // ),
+                // print('StreamBuilder: ${snapshot.connectionState}');
+                // final List<Odai> odaies = snapshot.data;
+                // int odaiCount;
+                // if (odaies == null) {
+                //   odaiCount = 0;
+                // } else {
+                //   odaiCount = odaies.length;
+                // }
+                //Pageviewのコード(下)
+                //____________________________
+                // return Expanded(
+                //   child: PageView.builder(
+                //     controller: _pageController,
+                //     scrollDirection: Axis.vertical,
+                //     onPageChanged: _handlePageChanged,
+                //     itemCount: odaiCount,
+                //     itemBuilder: (BuildContext context, int index) {
+                //      return  _buildFullPages(context, odaiCount);
+                //     },
+                //   ),
+                // );
+              ),
+            );
+            });
         });
   }
 
