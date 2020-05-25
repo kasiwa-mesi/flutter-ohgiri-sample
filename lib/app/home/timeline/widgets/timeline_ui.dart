@@ -75,6 +75,7 @@ class _TimelineUiState extends State<TimelineUi> {
           //   );
           // }
           final odaiCount = odaies.length;
+          //answers.countにして回答の数だけpageviewを作れるようにしたい。
           return Expanded(
             child: PageView.builder(
               onPageChanged: _onPageViewChange,
@@ -86,6 +87,9 @@ class _TimelineUiState extends State<TimelineUi> {
                 print(index);
                 final String title = odaies[index].name;
                 final String id = odaies[index].id;
+                //このidをページが更新されるごとにfirestoreから答えを保存する。
+                //odai/id/answersで読み込めるように
+                //でもこの処理を書くなら、確実にpageViewの外でやる必要がある。 
                 // Future(() {
                 //   Provider.of<OdaiModel>(context, listen: false).getOdai(title);
                 // });

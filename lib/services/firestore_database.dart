@@ -48,6 +48,11 @@ class FirestoreDatabase {
         path: FirestorePath.odais(),
         builder: (data, documentId) => Odai.fromMap(data, documentId),
       );
+  
+  Stream<List<Answer>> answersStream({@required String odaiId}) => _service.collectionStream(
+         path: FirestorePath.answers(odaiId),
+         builder: (data, documentId) => Answer.fromMap(data, documentId),
+       );
 
   // Stream<List<Odai>> odaiesStream() => _service.collectionStream(
   //       path: FirestorePath.odais(uid),
