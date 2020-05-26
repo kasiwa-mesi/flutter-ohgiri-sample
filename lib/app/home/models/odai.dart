@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:meta/meta.dart';
 
+//odaiとanswerを同時に取得できるようにしたい
 class Odai {
   Odai({@required this.id, @required this.name});
   final String id;
