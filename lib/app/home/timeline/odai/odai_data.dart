@@ -32,9 +32,11 @@ class OdaiModel extends ChangeNotifier {
   void getOdai() {
     getOdaiId(_currentIndex);
     _odai = _odaies[_currentIndex];
+    _odaiId = _odaies[_currentIndex].id;
     // title;
     // odai = title;
     print(_odai);
+    print(_odaiId);
     notifyListeners();
   }
 
@@ -49,6 +51,14 @@ class OdaiModel extends ChangeNotifier {
     }
   }
 
+  //idは固定した時のidを取得
+  // void getOdaiIdInIds() {
+  //   _odaiId = _odaiIds.first;
+  //   print(_odaiId);
+  //   notifyListeners();
+  // }
+
+  //ページが変更された時にidを取得する。
   void getOdaiIdInIds() {
     _odaiId = _odaiIds.first;
     print(_odaiId);

@@ -127,7 +127,7 @@ class _TimelineUiState extends State<TimelineUi> {
                     ),
                   );
                 },
-                itemCount: answers.length,
+                itemCount: odaies.length,
                 // children: _buildFullPages(odaiCount, odaies),
                 // children: TimelinePageTile(odaiCount: snapshot.data.length, odaies: snapshot.data,),
                 //childrenでも対応できるwidgetを探す？？？
