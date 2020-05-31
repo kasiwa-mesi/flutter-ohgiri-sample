@@ -20,10 +20,24 @@ class FirestoreDatabase {
         data: odai.toMap(),
       );
   
-  Future<void> setanswer(Odai odai, Answer answer) async => await _service.setData(
-        path: FirestorePath.answer(odai.id, answer.id),
+  Future<void> setodaiforanswer(Answer answer) async => await _service.setData(
+        path: FirestorePath.answer(answer.id),
         data: answer.toMap(),
       );
+  
+  // Future<void> setanswer(Odai odai, Answer answer) async => await _service.setData(
+  //       path: FirestorePath.answer(odai.id, answer.id),
+  //       data: answer.toMap(),
+  //     );
+
+  Future<void> setanswer(Answer answer) async => await _service.setData(
+        path: FirestorePath.answer(answer.id),
+        data: answer.toMap(),
+      );
+
+  Future<void> deleteanswer(String answerId) async => await _service.deleteData(
+        path: FirestorePath.answer(answerId),
+  );
 
   // Future<void> getodai() async => await _service.getData(
   //   path: FirestorePath.odais(),
@@ -49,8 +63,8 @@ class FirestoreDatabase {
         builder: (data, documentId) => Odai.fromMap(data, documentId),
       );
   
-  Stream<List<Answer>> answersStream({@required String odaiId}) => _service.collectionStream(
-         path: FirestorePath.answers(odaiId),
+  Stream<List<Answer>> answersStream() => _service.collectionStream(
+         path: FirestorePath.answers(),
          builder: (data, documentId) => Answer.fromMap(data, documentId),
        );
 

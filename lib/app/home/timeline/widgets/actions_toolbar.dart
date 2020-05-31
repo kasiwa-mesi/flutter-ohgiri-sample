@@ -143,7 +143,7 @@ class _ActionsToolbarState extends State<ActionsToolbar> {
                   Navigator.of(context).push(
                     MaterialPageRoute<void>(
                       builder: (context) =>
-                          CreateAnswerPage(odai: odaiModel.odai),
+                          CreateAnswerPage(odaiMap: odaiModel.odaiMap),
                     ),
                   );
                   // Navigator.of(context).push(

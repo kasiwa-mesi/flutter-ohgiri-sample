@@ -51,6 +51,7 @@ class Strings {
   // Theme page
   static const String odai = 'お題作成';
   static const String exapleOdai = '例:こんな美容室はいやだ？どんな美容室？';
+  static const String initialAnswer = 'まだ回答されていません';
 
   // Account page
   static const String account = 'Account';

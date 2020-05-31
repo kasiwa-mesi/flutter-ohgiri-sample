@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 import 'package:ohgiri_sample/common_widgets/show_exception_alert_dialog.dart';
 import 'package:ohgiri_sample/app/home/models/odai.dart';
+import 'package:ohgiri_sample/app/home/models/answer.dart';
 import 'package:ohgiri_sample/constants/strings.dart';
 import 'package:ohgiri_sample/services/firestore_database.dart';
 
@@ -41,8 +42,11 @@ class _CreateOdaiPageState extends State<CreateOdaiPage> {
         //上のコードが実行できないので一回ストップ。
         //おそらく、アーキテクチャーを気にせず、一回シンプルなfirebaseアプリを作ったほうがいい
         final id = uuid.v1();
+        final answerId = uuid.v1();
         final odai = Odai(name: _name, id: id);
+        final answer = Answer(odai: _name, answer: Strings.initialAnswer, id: answerId, odaiId: id);
         await database.setodai(odai);
+        await database.setodaiforanswer(answer);
         // ここの処理が間違っていると思う。
         // 作成成功後の画面に飛ばすか、alertを出したほうがいいと思う。
         // Navigator.of(context).pop();

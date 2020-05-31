@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:ohgiri_sample/app/home/models/odai.dart';
+import 'package:ohgiri_sample/app/home/models/answer.dart';
 import 'package:ohgiri_sample/services/firestore_database.dart';
 import 'package:ohgiri_sample/app/home/timeline/odai/odai_data.dart';
 import 'package:ohgiri_sample/app/home/home_page.dart';
@@ -51,17 +51,17 @@ class _TimelineUiState extends State<TimelineUi> {
         odaiModel.getOdaiId(page);
       });
     }
-    return StreamBuilder<List<Odai>>(
-        stream: database.odaisStream(),
+    return StreamBuilder<List<Answer>>(
+        stream: database.answersStream(),
         builder: (context, snapshot) {
           // return TimelinePagesBuilder(
           // snapshot: snapshot,
           print('StreamBuilder: ${snapshot.connectionState}');
-          final List<Odai> odaies = snapshot.data;
+          final List<Answer> answers = snapshot.data;
           Future(() {
-            odaiModel.getOdaies(odaies);
+            odaiModel.getAnswers(answers);
           });
-          if (odaies == null) {
+          if (answers == null) {
             return Container();
           }
           // if (odaies != null) {
@@ -74,7 +74,7 @@ class _TimelineUiState extends State<TimelineUi> {
           //     ],
           //   );
           // }
-          final odaiCount = odaies.length;
+          final odaiCount = answers.length;
           //answers.countにして回答の数だけpageviewを作れるようにしたい。
           return Expanded(
             child: PageView.builder(
@@ -85,8 +85,9 @@ class _TimelineUiState extends State<TimelineUi> {
               itemBuilder: (context, index) {
                 // print(odaies.length);
                 print(index);
-                final String title = odaies[index].name;
-                final String id = odaies[index].id;
+                final String odai = answers[index].odai;
+                final String answer = answers[index].answer;
+                final String id = answers[index].id;
                 //このidをページが更新されるごとにfirestoreから答えを保存する。
                 //odai/id/answersで読み込めるように
                 //でもこの処理を書くなら、確実にpageViewの外でやる必要がある。 
@@ -95,14 +96,14 @@ class _TimelineUiState extends State<TimelineUi> {
                 // });
                 return ListTile(
                   title: Text(
-                      title,
+                      odai,
                       style: TextStyle(
                         fontSize: 30.0,
                       ),
                     ),
                   subtitle: Center(
                     child: Text(
-                      id,
+                      answer,
                       style: TextStyle(
                         fontSize: 30.0
                       ),
@@ -110,7 +111,7 @@ class _TimelineUiState extends State<TimelineUi> {
                   ),
                 );
               },
-              itemCount: odaies.length,
+              itemCount: answers.length,
               // children: _buildFullPages(odaiCount, odaies),
               // children: TimelinePageTile(odaiCount: snapshot.data.length, odaies: snapshot.data,),
               //childrenでも対応できるwidgetを探す？？？
