@@ -49,6 +49,7 @@ class _TimelineUiState extends State<TimelineUi> {
       print("Current Page: " + page.toString());
       Future(() {
         odaiModel.getOdaiId(page);
+        odaiModel.funnyIncrementReset();
       });
     }
     return StreamBuilder<List<Answer>>(

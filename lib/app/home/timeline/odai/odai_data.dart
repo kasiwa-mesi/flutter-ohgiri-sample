@@ -25,6 +25,11 @@ class OdaiModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  void funnyIncrementReset() {
+    _funnyNumber = 0;
+    notifyListeners();
+  }
+
   void getOdaiId(int index) {
     _currentIndex = index;
     // if (_odaies != null) {

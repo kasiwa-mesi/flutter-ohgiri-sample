@@ -24,6 +24,11 @@ class _SignInPageState extends State<SignInPage> {
     try {
       final auth = Provider.of<FirebaseAuthService>(context, listen: false);
       await auth.signInAnonymously();
+      // id = await auth.getCurrentUser();
+      // final database = Provider.of<FirestoreDatabase>(context, listen: false);
+      // final user = User(uid: id, displayName: '名無し', likePostCount: 0);
+      // print(user);
+      // await database.setuser(user);
       //ここでAuthのidを取得したい。
       id = await auth.getCurrentUser();
     } catch (e) {

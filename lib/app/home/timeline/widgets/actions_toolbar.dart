@@ -106,8 +106,10 @@ class _ActionsToolbarState extends State<ActionsToolbar> {
   Future<void> _addFavarite() async {
     try {
       final odaiModel = Provider.of<OdaiModel>(context, listen: false);
+      final database = Provider.of<FirestoreDatabase>(context, listen: false);
       odaiModel.funnyIncrement();
       print(odaiModel.funnyNumber);
+      await database.addFunniedUser;
     } catch (e) {
       showExceptionAlertDialog(
         context: context,
