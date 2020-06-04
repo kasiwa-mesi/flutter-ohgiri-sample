@@ -110,6 +110,7 @@ class _ActionsToolbarState extends State<ActionsToolbar> {
       odaiModel.funnyIncrement();
       print(odaiModel.funnyNumber);
       await database.addFunniedUser;
+      // await database.
     } catch (e) {
       showExceptionAlertDialog(
         context: context,
