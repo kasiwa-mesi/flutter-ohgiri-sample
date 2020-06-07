@@ -6,11 +6,11 @@ import 'package:intl/intl.dart';
 @immutable
 class User {
   // const User({@required this.uid, @required this.displayName, @required this.email});
-  const User({@required this.uid, @required this.displayName, this.likePostCount, this.createTime});
+  const User({@required this.uid, @required this.displayName, this.likeAnswerCount, this.createTime});
   final String uid;
   final String displayName;
-  final int likePostCount;
-  int get currentLikeCount => likePostCount;
+  final int likeAnswerCount;
+  int get currentLikeCount => likeAnswerCount;
   final String createTime;
   // final String email;
 
@@ -19,20 +19,20 @@ class User {
       return null;
     }
     final String name = data['name'];
-    int _number = data['likePostCount'];
+    int _number = data['likeAnswerCount'];
     var format = new DateFormat.yMMMd('ja');
     final String createTime = format.format(new DateTime.now());
     if (name == null) {
       return null;
     }
-    return User(uid: documentId, displayName: name, likePostCount: _number, createTime: createTime);
+    return User(uid: documentId, displayName: name, likeAnswerCount: _number, createTime: createTime);
   }
 
     Map<String, dynamic> toMap() {
       return {
         'id' : uid,
         'name': displayName,
-        'likePostCount': likePostCount,
+        'likePostCount': likeAnswerCount,
         'createTime': createTime,
       };
   }

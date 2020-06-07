@@ -4,7 +4,7 @@ import 'package:ohgiri_sample/app/home/models/answer.dart';
 import 'package:ohgiri_sample/services/firestore_database.dart';
 import 'package:ohgiri_sample/app/home/timeline/odai/odai_data.dart';
 import 'package:ohgiri_sample/app/home/home_page.dart';
-import 'package:ohgiri_sample/app/home/timeline/timeline_pages_builder.dart';
+// import 'package:ohgiri_sample/app/home/timeline/timeline_pages_builder.dart';
 import 'package:ohgiri_sample/app/home/timeline/timeline_page.dart';
 import 'package:ohgiri_sample/app/home/timeline/widgets/downscroll_icon.dart';
 
@@ -49,6 +49,7 @@ class _TimelineUiState extends State<TimelineUi> {
       print("Current Page: " + page.toString());
       Future(() {
         odaiModel.getOdaiId(page);
+        odaiModel.getOdai();
         odaiModel.funnyIncrementReset();
       });
     }

@@ -40,7 +40,7 @@ class _InitialSettingPageState extends State<InitialSettingPage> {
         initializeDateFormatting('ja');
         var format = new DateFormat.yMMMd('ja');
         final String createTime = format.format(new DateTime.now());
-        final user = User(displayName: _name, uid: id, createTime: createTime, likePostCount: 0);
+        final user = User(displayName: _name, uid: id, createTime: createTime, likeAnswerCount: 0);
         await database.setuser(user);
       } catch (e) {
         print(e);

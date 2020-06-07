@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
+import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:ohgiri_sample/services/firebase_auth_service.dart';
 import 'package:ohgiri_sample/common_widgets/show_exception_alert_dialog.dart';
 import 'package:ohgiri_sample/app/home/timeline/timeline_page.dart';
 import 'package:ohgiri_sample/app/home/models/answer.dart';
+import 'package:ohgiri_sample/app/home/models/like/liked_user.dart';
 import 'package:ohgiri_sample/services/firestore_database.dart';
 import 'package:ohgiri_sample/app/home/timeline/answer/answer_page.dart';
 import 'package:ohgiri_sample/app/home/timeline/odai/odai_data.dart';
@@ -19,6 +23,7 @@ class ActionsToolbar extends StatefulWidget {
 class _ActionsToolbarState extends State<ActionsToolbar> {
   var uuid = Uuid();
   String _answerName;
+  String id;
 
   @override
   void initState() {
@@ -105,11 +110,19 @@ class _ActionsToolbarState extends State<ActionsToolbar> {
 
   Future<void> _addFavarite() async {
     try {
+      final auth = Provider.of<FirebaseAuthService>(context, listen: false);
       final odaiModel = Provider.of<OdaiModel>(context, listen: false);
       final database = Provider.of<FirestoreDatabase>(context, listen: false);
       odaiModel.funnyIncrement();
       print(odaiModel.funnyNumber);
-      await database.addFunniedUser;
+      //currentUserのidが必要
+      id = await auth.getCurrentUser();
+      initializeDateFormatting('ja');
+      var format = new DateFormat.yMMMd('ja');
+      final String createTime = format.format(new DateTime.now());
+      final user = LikedUser(uid: id, createTime: createTime);
+      await database.addFunniedUser(user, odaiModel.odaiMap['id']);
+      //answerコレクションのlikeCountフィールドの値を+1できるようにする。
       // await database.
     } catch (e) {
       showExceptionAlertDialog(

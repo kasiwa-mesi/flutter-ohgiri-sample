@@ -1,5 +1,5 @@
 import 'dart:ui';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:meta/meta.dart';
 
 class Answer {
@@ -8,6 +8,7 @@ class Answer {
   final String odai;
   final String answer;
   final String odaiId;
+  // final DocumentReference docRef;
   int likeCount;
 
   factory Answer.fromMap(Map<String, dynamic> data, String documentId) {
@@ -31,6 +32,7 @@ class Answer {
         'odai': odai,
         'answer': answer,
         'odaiId': odaiId,
+        'likeCount': likeCount,
       };
     }
 
