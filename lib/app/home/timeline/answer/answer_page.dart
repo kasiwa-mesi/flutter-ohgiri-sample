@@ -49,7 +49,7 @@ class _CreateAnswerPageState extends State<CreateAnswerPage> {
         //おそらく、アーキテクチャーを気にせず、一回シンプルなfirebaseアプリを作ったほうがいい
         final id = uuid.v1();
         // final odai = Odai(name: widget.odai.odai, id: widget.odai.id);
-        final answer = Answer(odai: widget.odaiMap['odai'], answer: _name, id: id, odaiId: widget.odaiMap['id']);
+        final answer = Answer(odai: widget.odaiMap['odai'], answer: _name, id: id, odaiId: widget.odaiMap['id'], likeCount: 0);
         await database.setanswer(answer);
         //answerのまだ回答されていませんをfirestoreから削除する
         //odaiMapを設定したので、削除するためのidPathが持ってこれる

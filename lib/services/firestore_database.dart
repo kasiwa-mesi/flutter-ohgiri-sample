@@ -45,18 +45,20 @@ class FirestoreDatabase {
   // );
 
   Future<void> addFunniedUser(LikedUser likedUser, String answerId) async => await _service.setData(
-        path: FirestorePath.likedUser(answerId, likedUser.id),
+        path: FirestorePath.likedUser(answerId, likedUser.uid),
         data: likedUser.toMap(),
   );
+
+  // Future<void> addFunnyForAnswer() async => await _service.
 
   Future<void> setuser(User user) async => await _service.setData(
         path: FirestorePath.user(user.uid),
         data: user.toMap(),
       );
-  Future<void> setInitialUser(User user) async => await _service.setData(
-        path: FirestorePath.user(user.uid),
-        data: user.toMap(),
-      );
+  // Future<void> setInitialUser(User user) async => await _service.setData(
+  //       path: FirestorePath.user(user.uid),
+  //       data: user.toMap(),
+  //     );
 
   Stream<User> userStream({@required String uid}) => _service.documentStream(
         path: FirestorePath.user(uid),

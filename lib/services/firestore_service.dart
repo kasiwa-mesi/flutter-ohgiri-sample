@@ -33,6 +33,14 @@ class FirestoreService {
     await reference.delete();
   }
 
+  // Future<void> addCount({@required String path}) async {
+  //   final reference = Firestore.instance.document(path);
+  //   print('favorite: $path');
+  //   await reference.update({
+  //     likeCount: firebase.firestore.FieldValue.increment(1);
+  //   });
+  // }
+
   Stream<List<T>> collectionStream<T>({
     @required String path,
     @required T builder(Map<String, dynamic> data, String documentID),
