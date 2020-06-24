@@ -7,7 +7,7 @@ import 'package:ohgiri_sample/services/firebase_auth_service.dart';
 import 'package:ohgiri_sample/common_widgets/show_exception_alert_dialog.dart';
 import 'package:ohgiri_sample/app/home/timeline/timeline_page.dart';
 import 'package:ohgiri_sample/app/home/models/answer.dart';
-import 'package:ohgiri_sample/app/home/models/like/liked_user.dart';
+// import 'package:ohgiri_sample/app/home/models/like/liked_user.dart';
 import 'package:ohgiri_sample/services/firestore_database.dart';
 import 'package:ohgiri_sample/app/home/timeline/answer/answer_page.dart';
 import 'package:ohgiri_sample/app/home/timeline/odai/odai_data.dart';
@@ -120,8 +120,8 @@ class _ActionsToolbarState extends State<ActionsToolbar> {
       initializeDateFormatting('ja');
       var format = new DateFormat.yMMMd('ja');
       final String createTime = format.format(new DateTime.now());
-      final user = LikedUser(uid: id, createTime: createTime);
-      await database.addFunniedUser(user, odaiModel.odaiMap['id']);
+      // final user = LikedUser(uid: id, createTime: createTime);
+      // await database.addFunniedUser(user, odaiModel.odaiMap['id']);
       //answerコレクションのlikeCountフィールドの値を+1できるようにする。
       // await database.
     } catch (e) {

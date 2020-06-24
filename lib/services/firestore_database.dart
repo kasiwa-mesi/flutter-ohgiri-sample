@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:meta/meta.dart';
 import 'package:ohgiri_sample/app/home/models/odai.dart';
 import 'package:ohgiri_sample/app/home/models/answer.dart';
-import 'package:ohgiri_sample/app/home/models/like/liked_user.dart';
+// import 'package:ohgiri_sample/app/home/models/like/liked_user.dart';
 import 'package:ohgiri_sample/services/firebase_auth_service.dart';
 import 'package:ohgiri_sample/services/firestore_path.dart';
 import 'package:ohgiri_sample/services/firestore_service.dart';
@@ -44,10 +44,10 @@ class FirestoreDatabase {
   //   path: FirestorePath.odais(),
   // );
 
-  Future<void> addFunniedUser(LikedUser likedUser, String answerId) async => await _service.setData(
-        path: FirestorePath.likedUser(answerId, likedUser.uid),
-        data: likedUser.toMap(),
-  );
+  // Future<void> addFunniedUser(LikedUser likedUser, String answerId) async => await _service.setData(
+  //       path: FirestorePath.likedUser(answerId, likedUser.uid),
+  //       data: likedUser.toMap(),
+  // );
 
   // Future<void> addFunnyForAnswer() async => await _service.
 
